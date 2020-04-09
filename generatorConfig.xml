@@ -1,0 +1,45 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="hierarchical">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+<!--    数据库连接信息    -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/pocket_community"
+                        userId="root"
+                        password="litchi"/>
+<!--    javaBean的存放位置    -->
+        <javaModelGenerator targetPackage="com.litchi.pocketcommunity.bean" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+<!--    mapper.xml的存放位置    -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+<!--    dao层接口的存放位置    -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.litchi.pocketcommunity.dao" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+<!--        <table tableName="m_user" domainObjectName="User">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+<!--        <table tableName="car" domainObjectName="Car">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+<!--        <table tableName="role" domainObjectName="Role">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+<!--        <table tableName="verify" domainObjectName="Verify">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+        <table tableName="image_file" domainObjectName="ImageFile">
+            <property name="useActualColumnNames" value="false" />
+        </table>
+    </context>
+
+</generatorConfiguration>
