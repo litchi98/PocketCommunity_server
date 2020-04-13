@@ -37,7 +37,10 @@
 <!--        <table tableName="verify" domainObjectName="Verify">-->
 <!--            <property name="useActualColumnNames" value="false" />-->
 <!--        </table>-->
-        <table tableName="image_file" domainObjectName="ImageFile">
+<!--        <table tableName="image_file" domainObjectName="ImageFile">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+        <table tableName="notice" domainObjectName="Notice">
             <property name="useActualColumnNames" value="false" />
         </table>
     </context>

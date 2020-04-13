@@ -52,7 +52,6 @@ public class ToolService implements IToolService {
         JSONObject images = jsonObject.getJSONArray("images").getJSONObject(0);
         Object url = images.get("url");
         StringBuilder dailyImageUrl = new StringBuilder().append("https://cn.bing.com").append(url.toString());
-        System.out.println(dailyImageUrl);
         return ResultMessage.getInstance().result(ResultMessage.SUCCESS_RESULT).putData("url", dailyImageUrl);
     }
 }
