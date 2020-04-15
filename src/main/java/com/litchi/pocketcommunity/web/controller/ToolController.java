@@ -5,18 +5,21 @@ import com.litchi.pocketcommunity.util.ErrorMessage;
 import com.litchi.pocketcommunity.util.ResultMessage;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /**
  * @ClassName: ToolController
  * @Description: TODO
  * @author: litchi
  */
-@RestController
+@Controller
 public class ToolController {
 
     @Autowired
@@ -24,6 +27,7 @@ public class ToolController {
 
     @ApiOperation(value = "upload a image file")
     @PutMapping("/uploadImage/{type}")
+    @ResponseBody
     public ResultMessage uploadImage(@PathVariable Integer type, MultipartFile uploadFile){
         String fileName = uploadFile.getOriginalFilename().toLowerCase();
         if (!fileName.endsWith(".bmp") && !fileName.endsWith(".jpg")
@@ -35,8 +39,19 @@ public class ToolController {
 
     @ApiOperation(value = "get a picture of the day")
     @GetMapping("/dailyImage")
+    @ResponseBody
     public ResultMessage dailyImage(){
         ResultMessage resultMessage = toolService.dailyImage();
         return resultMessage;
+    }
+
+    @ApiOperation(value="get image by id")
+    @GetMapping("/image/{id}")
+    public String getImage(@PathVariable Integer id){
+        File image = toolService.getImage(id);
+        String url = new StringBuilder().append("forward:../").append(image.getParentFile().getName())
+                .append("/").append(image.getName()).toString();
+        System.out.println(url);
+        return url;
     }
 }

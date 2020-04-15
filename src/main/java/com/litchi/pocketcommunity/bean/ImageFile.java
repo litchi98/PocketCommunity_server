@@ -1,11 +1,6 @@
 package com.litchi.pocketcommunity.bean;
 
 public class ImageFile extends ImageFileKey {
-
-    private static final int TYPE_ID_CARD = 0;
-    private static final int TYPE_CONTRACT = 1;
-    private static final int TYPE_AVATAR = 2;
-
     private Integer userId;
 
     private Integer type;

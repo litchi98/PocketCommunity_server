@@ -69,8 +69,8 @@
   <sql id="Base_Column_List">
     id, user_id, title, content, publish_date
   </sql>
-  <sql id="Base_Column_List_WithName">
-    n.id,n.user_id, n.title, n.content, n.publish_date, m.name, i.id avatarId
+  <sql id="Base_Column_List_With_Name">
+    n.id, n.user_id, n.title, n.content, n.publish_date, m.name, i.id avatarId
   </sql>
   <select id="selectByExample" parameterType="com.litchi.pocketcommunity.bean.NoticeExample" resultMap="BaseResultMap">
     select
@@ -91,8 +91,8 @@
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List_WithName" />
-    from notice n left join m_user m on n.user_id=m.id left join image_file i on i.user_id=n.user_id and i.type="2"
+    <include refid="Base_Column_List_With_Name" />
+    from notice n left join m_user m on n.user_id=m.id left join image_file i on i.id=m.avatar_image_id
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>

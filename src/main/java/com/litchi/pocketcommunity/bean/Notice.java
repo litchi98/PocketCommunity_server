@@ -15,20 +15,20 @@ public class Notice extends NoticeKey {
 
     private Integer avatarId;
 
-    public Integer getAvatarId() {
-        return avatarId;
-    }
-
-    public void setAvatarId(Integer avatarId) {
-        this.avatarId = avatarId;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(Integer avatarId) {
+        this.avatarId = avatarId;
     }
 
     public Integer getUserId() {

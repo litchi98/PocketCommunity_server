@@ -7,9 +7,6 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.litchi.pocketcommunity.bean.ImageFileWithBLOBs">
-    <result column="file" jdbcType="LONGVARBINARY" property="file" />
-  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -71,25 +68,6 @@
   <sql id="Base_Column_List">
     id, user_id, type, name
   </sql>
-  <sql id="Blob_Column_List">
-    file
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.litchi.pocketcommunity.bean.ImageFileExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from image_file
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.litchi.pocketcommunity.bean.ImageFileExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -104,11 +82,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.ImageFileKey" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.ImageFileKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from image_file
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -122,13 +98,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.litchi.pocketcommunity.bean.ImageFileWithBLOBs">
+  <insert id="insert" parameterType="com.litchi.pocketcommunity.bean.ImageFile">
     insert into image_file (id, user_id, type, 
-      name, file)
+      name)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{file,jdbcType=LONGVARBINARY})
+      #{name,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.litchi.pocketcommunity.bean.ImageFileWithBLOBs">
+  <insert id="insertSelective" parameterType="com.litchi.pocketcommunity.bean.ImageFile">
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into image_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -143,9 +122,6 @@
       <if test="name != null">
         name,
       </if>
-      <if test="file != null">
-        file,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -159,9 +135,6 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="file != null">
-        #{file,jdbcType=LONGVARBINARY},
       </if>
     </trim>
   </insert>
@@ -186,21 +159,7 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.file != null">
-        file = #{record.file,jdbcType=LONGVARBINARY},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update image_file
-    set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      file = #{record.file,jdbcType=LONGVARBINARY}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -215,7 +174,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.litchi.pocketcommunity.bean.ImageFileWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="com.litchi.pocketcommunity.bean.ImageFile">
     update image_file
     <set>
       <if test="userId != null">
@@ -227,18 +186,7 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="file != null">
-        file = #{file,jdbcType=LONGVARBINARY},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.litchi.pocketcommunity.bean.ImageFileWithBLOBs">
-    update image_file
-    set user_id = #{userId,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      file = #{file,jdbcType=LONGVARBINARY}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.ImageFile">
