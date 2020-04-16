@@ -51,7 +51,6 @@ public class ToolController {
         File image = toolService.getImage(id);
         String url = new StringBuilder().append("forward:../").append(image.getParentFile().getName())
                 .append("/").append(image.getName()).toString();
-        System.out.println(url);
         return url;
     }
 }

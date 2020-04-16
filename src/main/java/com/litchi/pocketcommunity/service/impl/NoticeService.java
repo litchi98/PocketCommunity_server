@@ -33,7 +33,9 @@ public class NoticeService implements INoticeService {
     @Override
     public ResultMessage getNotices(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        PageInfo<Notice> noticePageInfo = new PageInfo<>(noticeMapper.selectByExampleWithName(new NoticeExample()));
+        NoticeExample noticeExample = new NoticeExample();
+        noticeExample.setOrderByClause("id desc");
+        PageInfo<Notice> noticePageInfo = new PageInfo<>(noticeMapper.selectByExampleWithName(noticeExample));
         List<Notice> notices = noticePageInfo.getList();
 
         int pages = noticePageInfo.getPages();
