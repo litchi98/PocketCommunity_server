@@ -44,6 +44,13 @@ public class NoticeService implements INoticeService {
         return resultMessage;
     }
 
+    /**
+    * @description: add a notice
+    * TODO
+    * @param: notice
+    * @return: ResultMessage
+    * @author: litchi
+    */
     @Override
     public ResultMessage addNotice(Notice notice) {
         noticeMapper.insert(notice);
