@@ -33,9 +33,9 @@ public class ToolService implements IToolService {
     @Override
     public ResultMessage uploadImage(Integer type, MultipartFile uploadFile) {
         ResultMessage resultMessage = ResultMessage.getInstance();
-        String originalFilename = uploadFile.getOriginalFilename();
+        String originalFilename = uploadFile.getOriginalFilename().toLowerCase();
         if (!originalFilename.endsWith(".jpg") && !originalFilename.endsWith(".png") &&
-        !originalFilename.endsWith(".jpeg")){
+        !originalFilename.endsWith(".jpeg") && !originalFilename.endsWith(".bmp")){
             return resultMessage.result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.UPLOAD_FILE_FORMAT_NOT_SUPPORT);
         }
         String uuid = UUID.randomUUID().toString().replace("-","");

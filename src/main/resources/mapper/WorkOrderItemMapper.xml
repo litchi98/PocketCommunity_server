@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.litchi.pocketcommunity.dao.WorkOrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.litchi.pocketcommunity.bean.WorkOrderItem">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="work_order_id" jdbcType="INTEGER" property="workOrderId" />
+    <result column="processor_id" jdbcType="INTEGER" property="processorId" />
+    <result column="next_processor_id" jdbcType="INTEGER" property="nextProcessorId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="deal_date" jdbcType="DATE" property="dealDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, work_order_id, processor_id, next_processor_id, type, message, deal_date
+  </sql>
+  <select id="selectByExample" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from work_order_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItemKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from work_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItemKey">
+    delete from work_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItemExample">
+    delete from work_order_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItem">
+    insert into work_order_detail (id, work_order_id, processor_id, 
+      next_processor_id, type, message, 
+      deal_date)
+    values (#{id,jdbcType=INTEGER}, #{workOrderId,jdbcType=INTEGER}, #{processorId,jdbcType=INTEGER}, 
+      #{nextProcessorId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, 
+      #{dealDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItem">
+    insert into work_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="workOrderId != null">
+        work_order_id,
+      </if>
+      <if test="processorId != null">
+        processor_id,
+      </if>
+      <if test="nextProcessorId != null">
+        next_processor_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="dealDate != null">
+        deal_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workOrderId != null">
+        #{workOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="processorId != null">
+        #{processorId,jdbcType=INTEGER},
+      </if>
+      <if test="nextProcessorId != null">
+        #{nextProcessorId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="dealDate != null">
+        #{dealDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItemExample" resultType="java.lang.Long">
+    select count(*) from work_order_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update work_order_detail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.workOrderId != null">
+        work_order_id = #{record.workOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.processorId != null">
+        processor_id = #{record.processorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nextProcessorId != null">
+        next_processor_id = #{record.nextProcessorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.message != null">
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealDate != null">
+        deal_date = #{record.dealDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update work_order_detail
+    set id = #{record.id,jdbcType=INTEGER},
+      work_order_id = #{record.workOrderId,jdbcType=INTEGER},
+      processor_id = #{record.processorId,jdbcType=INTEGER},
+      next_processor_id = #{record.nextProcessorId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      message = #{record.message,jdbcType=VARCHAR},
+      deal_date = #{record.dealDate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItem">
+    update work_order_detail
+    <set>
+      <if test="workOrderId != null">
+        work_order_id = #{workOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="processorId != null">
+        processor_id = #{processorId,jdbcType=INTEGER},
+      </if>
+      <if test="nextProcessorId != null">
+        next_processor_id = #{nextProcessorId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="dealDate != null">
+        deal_date = #{dealDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItem">
+    update work_order_detail
+    set work_order_id = #{workOrderId,jdbcType=INTEGER},
+      processor_id = #{processorId,jdbcType=INTEGER},
+      next_processor_id = #{nextProcessorId,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      message = #{message,jdbcType=VARCHAR},
+      deal_date = #{dealDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

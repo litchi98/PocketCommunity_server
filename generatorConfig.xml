@@ -37,12 +37,19 @@
 <!--        <table tableName="verify" domainObjectName="Verify">-->
 <!--            <property name="useActualColumnNames" value="false" />-->
 <!--        </table>-->
-        <table tableName="image_file" domainObjectName="ImageFile">
-            <property name="useActualColumnNames" value="false" />
-        </table>
+<!--        <table tableName="image_file" domainObjectName="ImageFile">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
 <!--        <table tableName="notice" domainObjectName="Notice">-->
 <!--            <property name="useActualColumnNames" value="false" />-->
 <!--        </table>-->
+<!--        <table tableName="work_order" domainObjectName="WorkOrder">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+<!--        <table tableName="work_order_detail" domainObjectName="WorkOrderItem">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+        <table tableName="asd"/>
     </context>
 
 </generatorConfiguration>
