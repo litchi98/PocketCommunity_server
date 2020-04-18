@@ -101,10 +101,13 @@ public class WorkOrderService implements IWorkOrderService {
         switch (type){
             case WorkOrderItem.TYPE_SUBMIT:
                 state = WorkOrder.STATE_TO_BE_CONFIRMED;
+                break;
             case WorkOrderItem.TYPE_FINISH:
                 state = WorkOrder.STATE_FINISH;
+                break;
             default:
                 state = WorkOrder.STATE_PROCESSING;
+                break;
         }
         changeWorkOrderState(workOrderItem.getWorkOrderId(), workOrderItem.getNextProcessorId(), state);
         addWorkOrderItem(workOrderItem);

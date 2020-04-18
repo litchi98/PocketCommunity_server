@@ -6,10 +6,7 @@ import com.litchi.pocketcommunity.util.ResultMessage;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,9 +23,9 @@ public class ToolController {
     private IToolService toolService;
 
     @ApiOperation(value = "upload a image file")
-    @PutMapping("/uploadImage/{type}")
+    @PostMapping("/image")
     @ResponseBody
-    public ResultMessage uploadImage(@PathVariable Integer type, MultipartFile uploadFile){
+    public ResultMessage uploadImage(@RequestParam Integer type, MultipartFile uploadFile){
         String fileName = uploadFile.getOriginalFilename().toLowerCase();
         if (!fileName.endsWith(".bmp") && !fileName.endsWith(".jpg")
                 && !fileName.endsWith(".jpeg") && !fileName.endsWith(".png")) {

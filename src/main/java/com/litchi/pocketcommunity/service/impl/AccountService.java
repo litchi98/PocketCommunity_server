@@ -43,6 +43,7 @@ public class AccountService implements IAccountService {
             return resultMessage.result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.REGISTER_ACCOUNT_ALREADY_EXIST);
         }
         //新用户注册
+        user.setAvatarImageId(11);
         userMapper.insert(user);
         Integer id = isExist(user.getTelNumber());
         Verify verify = new Verify(id, Verify.VERIFY_PROCESSING, "");
@@ -71,7 +72,9 @@ public class AccountService implements IAccountService {
             claims.put("userId",userId);
             JSONObject jsonObject = jwtUtils.generateToken(claims);
             resultMessage.removeAllData();
-            return resultMessage.putData("roleId", user.getRoleId()).putData("authorization", jsonObject).result(ResultMessage.SUCCESS_RESULT);
+            return resultMessage.result(ResultMessage.SUCCESS_RESULT).putData("roleId", user.getRoleId())
+                    .putData("avatarId", user.getAvatarImageId()).putData("name", user.getName())
+                    .putData("authorization", jsonObject);
         }
         return resultMessage.result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.LOGIN_INCORRECT_ERROR);
     }
