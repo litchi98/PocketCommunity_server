@@ -2,7 +2,6 @@ package com.litchi.pocketcommunity.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class WorkOrderExample {
@@ -104,32 +103,6 @@ public class WorkOrderExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -453,52 +426,122 @@ public class WorkOrderExample {
         }
 
         public Criteria andProposeDateEqualTo(Date value) {
-            addCriterionForJDBCDate("propose_date =", value, "proposeDate");
+            addCriterion("propose_date =", value, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("propose_date <>", value, "proposeDate");
+            addCriterion("propose_date <>", value, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("propose_date >", value, "proposeDate");
+            addCriterion("propose_date >", value, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("propose_date >=", value, "proposeDate");
+            addCriterion("propose_date >=", value, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateLessThan(Date value) {
-            addCriterionForJDBCDate("propose_date <", value, "proposeDate");
+            addCriterion("propose_date <", value, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("propose_date <=", value, "proposeDate");
+            addCriterion("propose_date <=", value, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateIn(List<Date> values) {
-            addCriterionForJDBCDate("propose_date in", values, "proposeDate");
+            addCriterion("propose_date in", values, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("propose_date not in", values, "proposeDate");
+            addCriterion("propose_date not in", values, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("propose_date between", value1, value2, "proposeDate");
+            addCriterion("propose_date between", value1, value2, "proposeDate");
             return (Criteria) this;
         }
 
         public Criteria andProposeDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("propose_date not between", value1, value2, "proposeDate");
+            addCriterion("propose_date not between", value1, value2, "proposeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleIsNull() {
+            addCriterion("title is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleIsNotNull() {
+            addCriterion("title is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleEqualTo(String value) {
+            addCriterion("title =", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleNotEqualTo(String value) {
+            addCriterion("title <>", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleGreaterThan(String value) {
+            addCriterion("title >", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("title >=", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleLessThan(String value) {
+            addCriterion("title <", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleLessThanOrEqualTo(String value) {
+            addCriterion("title <=", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleLike(String value) {
+            addCriterion("title like", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleNotLike(String value) {
+            addCriterion("title not like", value, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleIn(List<String> values) {
+            addCriterion("title in", values, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleNotIn(List<String> values) {
+            addCriterion("title not in", values, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleBetween(String value1, String value2) {
+            addCriterion("title between", value1, value2, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleNotBetween(String value1, String value2) {
+            addCriterion("title not between", value1, value2, "title");
             return (Criteria) this;
         }
     }

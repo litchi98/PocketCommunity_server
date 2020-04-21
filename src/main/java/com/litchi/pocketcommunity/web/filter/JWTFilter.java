@@ -69,11 +69,11 @@ public class JWTFilter implements Filter {
                     }
                 }
             }
+            chain.doFilter(request, response);
         } catch (Exception e) {
+            System.out.println("??????????");
             e.printStackTrace();
         }
-        chain.doFilter(request, response);
-        return;
     }
 
     @Override

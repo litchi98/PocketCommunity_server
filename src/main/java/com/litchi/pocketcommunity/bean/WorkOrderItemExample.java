@@ -2,7 +2,6 @@ package com.litchi.pocketcommunity.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class WorkOrderItemExample {
@@ -104,32 +103,6 @@ public class WorkOrderItemExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -513,52 +486,52 @@ public class WorkOrderItemExample {
         }
 
         public Criteria andDealDateEqualTo(Date value) {
-            addCriterionForJDBCDate("deal_date =", value, "dealDate");
+            addCriterion("deal_date =", value, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("deal_date <>", value, "dealDate");
+            addCriterion("deal_date <>", value, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("deal_date >", value, "dealDate");
+            addCriterion("deal_date >", value, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("deal_date >=", value, "dealDate");
+            addCriterion("deal_date >=", value, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateLessThan(Date value) {
-            addCriterionForJDBCDate("deal_date <", value, "dealDate");
+            addCriterion("deal_date <", value, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("deal_date <=", value, "dealDate");
+            addCriterion("deal_date <=", value, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateIn(List<Date> values) {
-            addCriterionForJDBCDate("deal_date in", values, "dealDate");
+            addCriterion("deal_date in", values, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("deal_date not in", values, "dealDate");
+            addCriterion("deal_date not in", values, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("deal_date between", value1, value2, "dealDate");
+            addCriterion("deal_date between", value1, value2, "dealDate");
             return (Criteria) this;
         }
 
         public Criteria andDealDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("deal_date not between", value1, value2, "dealDate");
+            addCriterion("deal_date not between", value1, value2, "dealDate");
             return (Criteria) this;
         }
     }

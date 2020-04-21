@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class WorkOrder extends WorkOrderKey {
 
-    public static final int STATE_TO_BE_PROCESSED = 0;
-    public static final int STATE_PROCESSING = 1;
-    public static final int STATE_TO_BE_CONFIRMED = 2;
+    public static final int STATE_TO_BE_CONFIRMED = 0;
+    public static final int STATE_TO_BE_PROCESSED = 1;
+    public static final int STATE_PROCESSING = 2;
     public static final int STATE_FINISH = 3;
 
     private Integer proposerId;
@@ -18,6 +18,8 @@ public class WorkOrder extends WorkOrderKey {
     private String content;
 
     private Date proposeDate;
+
+    private String title;
 
     public Integer getProposerId() {
         return proposerId;
@@ -57,5 +59,13 @@ public class WorkOrder extends WorkOrderKey {
 
     public void setProposeDate(Date proposeDate) {
         this.proposeDate = proposeDate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 }

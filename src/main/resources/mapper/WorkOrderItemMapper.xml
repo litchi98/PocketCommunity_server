@@ -8,7 +8,7 @@
     <result column="next_processor_id" jdbcType="INTEGER" property="nextProcessorId" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="message" jdbcType="VARCHAR" property="message" />
-    <result column="deal_date" jdbcType="DATE" property="dealDate" />
+    <result column="deal_date" jdbcType="TIMESTAMP" property="dealDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -107,7 +107,7 @@
       deal_date)
     values (#{id,jdbcType=INTEGER}, #{workOrderId,jdbcType=INTEGER}, #{processorId,jdbcType=INTEGER}, 
       #{nextProcessorId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, 
-      #{dealDate,jdbcType=DATE})
+      #{dealDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItem">
     insert into work_order_detail
@@ -154,7 +154,7 @@
         #{message,jdbcType=VARCHAR},
       </if>
       <if test="dealDate != null">
-        #{dealDate,jdbcType=DATE},
+        #{dealDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -186,7 +186,7 @@
         message = #{record.message,jdbcType=VARCHAR},
       </if>
       <if test="record.dealDate != null">
-        deal_date = #{record.dealDate,jdbcType=DATE},
+        deal_date = #{record.dealDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -201,7 +201,7 @@
       next_processor_id = #{record.nextProcessorId,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       message = #{record.message,jdbcType=VARCHAR},
-      deal_date = #{record.dealDate,jdbcType=DATE}
+      deal_date = #{record.dealDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -225,7 +225,7 @@
         message = #{message,jdbcType=VARCHAR},
       </if>
       <if test="dealDate != null">
-        deal_date = #{dealDate,jdbcType=DATE},
+        deal_date = #{dealDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -237,7 +237,7 @@
       next_processor_id = #{nextProcessorId,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       message = #{message,jdbcType=VARCHAR},
-      deal_date = #{dealDate,jdbcType=DATE}
+      deal_date = #{dealDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

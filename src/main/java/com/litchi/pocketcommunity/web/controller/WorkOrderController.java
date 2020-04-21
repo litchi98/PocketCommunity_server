@@ -2,6 +2,7 @@ package com.litchi.pocketcommunity.web.controller;
 
 import com.litchi.pocketcommunity.bean.WorkOrder;
 import com.litchi.pocketcommunity.bean.WorkOrderItem;
+import com.litchi.pocketcommunity.service.IAccountService;
 import com.litchi.pocketcommunity.service.IWorkOrderService;
 import com.litchi.pocketcommunity.util.ResultMessage;
 import io.swagger.annotations.ApiOperation;
@@ -18,21 +19,29 @@ public class WorkOrderController {
 
     @Autowired
     private IWorkOrderService workOrderService;
+    @Autowired
+    private IAccountService accountService;
 
-    @ApiOperation(value = "get work orders by user id")
-    @GetMapping("/work-orders")
-    public ResultMessage getWorkOrders(@RequestParam Integer currentUserId){
-        return workOrderService.getWorkOrders(currentUserId);
+    @ApiOperation(value = "get work orders")
+    @GetMapping("/work-orders/done")
+    public ResultMessage getDoneWorkOrders(@RequestAttribute Integer currentUserId, @RequestParam String condition){
+        return workOrderService.getDoneWorkOrders(currentUserId, condition);
     }
 
-    @ApiOperation(value = "get work orders by user id")
-    @GetMapping("/work-orders/{state:[0-2]]}")
-    public ResultMessage getWorkOrdersByState(@RequestParam Integer currentUserId, @PathVariable Integer state){
+    @ApiOperation(value = "get work orders")
+    @GetMapping("/work-orders/undone")
+    public ResultMessage getNotDoneWorkOrders(@RequestAttribute Integer currentUserId, @RequestParam String condition){
+        return workOrderService.getNotDoneWorkOrders(currentUserId, condition);
+    }
+
+    @ApiOperation(value = "get work orders state")
+    @GetMapping("/work-orders/{state:[0-3]]}")
+    public ResultMessage getWorkOrdersByState(@RequestAttribute Integer currentUserId, @PathVariable Integer state){
         return workOrderService.getWorkOrdersByState(currentUserId, state);
     }
 
     @ApiOperation(value = "add a work order")
-    @PostMapping("/work-order/add")
+    @PostMapping("/work-order")
     public ResultMessage addWorkOrders(@RequestBody WorkOrder workOrder){
         return workOrderService.addWorkOrder(workOrder);
     }
@@ -44,8 +53,10 @@ public class WorkOrderController {
     }
 
     @ApiOperation(value = "get work order details")
-    @GetMapping("/work-order")
+    @GetMapping("/work-order/detail")
     public ResultMessage getWorkOrderDetail(@RequestParam Integer workOrderId){
+        int id = workOrderService.getProposerId(workOrderId);
+//        accountService.getNameAndAvatar();
         return workOrderService.getWorkOrderDetail(workOrderId);
     }
 }

@@ -5,7 +5,6 @@ import com.litchi.pocketcommunity.bean.WorkOrderItem;
 import com.litchi.pocketcommunity.util.ResultMessage;
 
 public interface IWorkOrderService {
-    ResultMessage getWorkOrders(Integer userId);
 
     ResultMessage getWorkOrdersByState(Integer userId, Integer state);
 
@@ -14,4 +13,10 @@ public interface IWorkOrderService {
     ResultMessage addWorkOrder(WorkOrder workOrder);
 
     ResultMessage transferWorkOrder(WorkOrderItem workOrderItem);
+
+    ResultMessage getDoneWorkOrders(Integer userId, String condition);
+
+    ResultMessage getNotDoneWorkOrders(Integer userId, String condition);
+
+    int getProposerId(Integer workOrderId);
 }

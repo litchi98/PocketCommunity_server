@@ -3,9 +3,8 @@ package com.litchi.pocketcommunity.dao;
 import com.litchi.pocketcommunity.bean.WorkOrder;
 import com.litchi.pocketcommunity.bean.WorkOrderExample;
 import com.litchi.pocketcommunity.bean.WorkOrderKey;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface WorkOrderMapper {
     long countByExample(WorkOrderExample example);

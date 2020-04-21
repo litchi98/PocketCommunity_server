@@ -16,5 +16,5 @@ public class ErrorMessage {
     public static final String UPLOAD_FILE_FORMAT_NOT_SUPPORT = "Only supports BMP/JPG/JPEG/PNG format files";
     public static final String UPLOAD_FILE_ERROR = "Upload failed, please try again";
 
-    public static final String WORK_ORDER_RESULT_IS_NULL = "The query result is empty";
+    public static final String QUERY_RESULT_IS_EMPTY = "The query result is empty";
 }

@@ -7,7 +7,8 @@
     <result column="current_processor_id" jdbcType="INTEGER" property="currentProcessorId" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="propose_date" jdbcType="DATE" property="proposeDate" />
+    <result column="propose_date" jdbcType="TIMESTAMP" property="proposeDate" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, proposer_id, current_processor_id, state, content, propose_date
+    id, proposer_id, current_processor_id, state, content, propose_date, title
   </sql>
   <select id="selectByExample" parameterType="com.litchi.pocketcommunity.bean.WorkOrderExample" resultMap="BaseResultMap">
     select
@@ -102,11 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.litchi.pocketcommunity.bean.WorkOrder">
     insert into work_order (id, proposer_id, current_processor_id, 
-      state, content, propose_date
-      )
+      state, content, propose_date, 
+      title)
     values (#{id,jdbcType=INTEGER}, #{proposerId,jdbcType=INTEGER}, #{currentProcessorId,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{proposeDate,jdbcType=DATE}
-      )
+      #{state,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{proposeDate,jdbcType=TIMESTAMP}, 
+      #{title,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.litchi.pocketcommunity.bean.WorkOrder">
     insert into work_order
@@ -129,6 +130,9 @@
       <if test="proposeDate != null">
         propose_date,
       </if>
+      <if test="title != null">
+        title,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -147,7 +151,10 @@
         #{content,jdbcType=VARCHAR},
       </if>
       <if test="proposeDate != null">
-        #{proposeDate,jdbcType=DATE},
+        #{proposeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -176,7 +183,10 @@
         content = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.proposeDate != null">
-        propose_date = #{record.proposeDate,jdbcType=DATE},
+        propose_date = #{record.proposeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -190,7 +200,8 @@
       current_processor_id = #{record.currentProcessorId,jdbcType=INTEGER},
       state = #{record.state,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
-      propose_date = #{record.proposeDate,jdbcType=DATE}
+      propose_date = #{record.proposeDate,jdbcType=TIMESTAMP},
+      title = #{record.title,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -211,7 +222,10 @@
         content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="proposeDate != null">
-        propose_date = #{proposeDate,jdbcType=DATE},
+        propose_date = #{proposeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -222,7 +236,8 @@
       current_processor_id = #{currentProcessorId,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
-      propose_date = #{proposeDate,jdbcType=DATE}
+      propose_date = #{proposeDate,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

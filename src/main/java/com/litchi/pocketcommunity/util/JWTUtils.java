@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -47,7 +46,7 @@ public class JWTUtils {
         System.out.println(jwt);
         JSONObject json = new JSONObject();
         json.put("token", TOKEN_PREFIX + " " + jwt);
-        json.put("expireTime", new SimpleDateFormat("yyyy-MM-dd HH:ss:mm").format(d));
+        json.put("expireTime", d.getTime());
         return json;
     }
 
