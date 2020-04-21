@@ -71,6 +71,9 @@
   <sql id="Base_Column_List">
     id, work_order_id, processor_id, next_processor_id, type, message, deal_date
   </sql>
+  <sql id="Base_Column_List_With_Name">
+    w.id, w.work_order_id, w.processor_id, w.next_processor_id, w.type, w.message, w.deal_date,m.name processorName, n.name nextProcessorName
+  </sql>
   <select id="selectByExample" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItemExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -78,6 +81,20 @@
     </if>
     <include refid="Base_Column_List" />
     from work_order_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithName" parameterType="com.litchi.pocketcommunity.bean.WorkOrderItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List_With_Name" />
+    from work_order_detail w left join m_user m on w.processor_id=m.id left join m_user n on w.next_processor_id=n.id
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>

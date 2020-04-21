@@ -3,8 +3,9 @@ package com.litchi.pocketcommunity.dao;
 import com.litchi.pocketcommunity.bean.WorkOrderItem;
 import com.litchi.pocketcommunity.bean.WorkOrderItemExample;
 import com.litchi.pocketcommunity.bean.WorkOrderItemKey;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface WorkOrderItemMapper {
     long countByExample(WorkOrderItemExample example);
@@ -18,6 +19,8 @@ public interface WorkOrderItemMapper {
     int insertSelective(WorkOrderItem record);
 
     List<WorkOrderItem> selectByExample(WorkOrderItemExample example);
+
+    List<WorkOrderItem> selectByExampleWithName(WorkOrderItemExample example);
 
     WorkOrderItem selectByPrimaryKey(WorkOrderItemKey key);
 

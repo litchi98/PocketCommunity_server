@@ -54,8 +54,8 @@ public class WorkOrderService implements IWorkOrderService {
     public int getProposerId(Integer workOrderId) {
         WorkOrderKey workOrderKey = new WorkOrderKey();
         workOrderKey.setId(workOrderId);
-        workOrderMapper.selectByPrimaryKey(workOrderKey);
-        return 0;
+        WorkOrder workOrder = workOrderMapper.selectByPrimaryKey(workOrderKey);
+        return workOrder.getProposerId();
     }
 
     /**
@@ -85,7 +85,7 @@ public class WorkOrderService implements IWorkOrderService {
     public ResultMessage getWorkOrderDetail(Integer workOrderId) {
         WorkOrderItemExample workOrderItemExample = new WorkOrderItemExample();
         workOrderItemExample.createCriteria().andWorkOrderIdEqualTo(workOrderId);
-        List<WorkOrderItem> workOrderItems = workOrderItemMapper.selectByExample(workOrderItemExample);
+        List<WorkOrderItem> workOrderItems = workOrderItemMapper.selectByExampleWithName(workOrderItemExample);
         return checkEmpty(workOrderItems, "workOrderItems");
     }
 

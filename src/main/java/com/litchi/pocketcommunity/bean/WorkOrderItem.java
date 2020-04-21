@@ -13,7 +13,11 @@ public class WorkOrderItem extends WorkOrderItemKey {
 
     private Integer processorId;
 
+    private String processorName;
+
     private Integer nextProcessorId;
+
+    private String nextProcessorName;
 
     private Integer type;
 
@@ -67,5 +71,21 @@ public class WorkOrderItem extends WorkOrderItemKey {
 
     public void setDealDate(Date dealDate) {
         this.dealDate = dealDate;
+    }
+
+    public String getProcessorName() {
+        return processorName;
+    }
+
+    public void setProcessorName(String processorName) {
+        this.processorName = processorName;
+    }
+
+    public String getNextProcessorName() {
+        return nextProcessorName;
+    }
+
+    public void setNextProcessorName(String nextProcessorName) {
+        this.nextProcessorName = nextProcessorName;
     }
 }

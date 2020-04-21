@@ -1,5 +1,6 @@
 package com.litchi.pocketcommunity.web.controller;
 
+import com.litchi.pocketcommunity.bean.User;
 import com.litchi.pocketcommunity.bean.WorkOrder;
 import com.litchi.pocketcommunity.bean.WorkOrderItem;
 import com.litchi.pocketcommunity.service.IAccountService;
@@ -56,7 +57,8 @@ public class WorkOrderController {
     @GetMapping("/work-order/detail")
     public ResultMessage getWorkOrderDetail(@RequestParam Integer workOrderId){
         int id = workOrderService.getProposerId(workOrderId);
-//        accountService.getNameAndAvatar();
-        return workOrderService.getWorkOrderDetail(workOrderId);
+        User user = accountService.getNameAndAvatarId(id);
+
+        return workOrderService.getWorkOrderDetail(workOrderId).putData("name", user.getName()).putData("avatarId", user.getAvatarImageId());
     }
 }

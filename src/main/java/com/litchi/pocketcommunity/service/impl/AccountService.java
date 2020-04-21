@@ -178,6 +178,11 @@ public class AccountService implements IAccountService {
         return ResultMessage.getInstance().result(ResultMessage.SUCCESS_RESULT).putData("users", users);
     }
 
+    @Override
+    public User getNameAndAvatarId(int id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
 
     /**
     * @description: check whether the user status is normal, if account is normal then return a ResultMessage with userId

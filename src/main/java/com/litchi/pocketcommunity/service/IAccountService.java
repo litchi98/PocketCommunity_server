@@ -21,4 +21,5 @@ public interface IAccountService {
 
     ResultMessage getAllUser();
 
+    User getNameAndAvatarId(int id);
 }
