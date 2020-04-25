@@ -74,7 +74,7 @@ public class AccountService implements IAccountService {
             resultMessage.removeAllData();
             return resultMessage.result(ResultMessage.SUCCESS_RESULT).putData("roleId", user.getRoleId())
                     .putData("avatarId", user.getAvatarImageId()).putData("name", user.getName())
-                    .putData("authorization", jsonObject);
+                    .putData("currentUserId", userId).putData("authorization", jsonObject);
         }
         return resultMessage.result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.LOGIN_INCORRECT_ERROR);
     }
