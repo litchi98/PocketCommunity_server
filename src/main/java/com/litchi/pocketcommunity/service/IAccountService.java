@@ -5,8 +5,6 @@ import com.litchi.pocketcommunity.util.ResultMessage;
 
 public interface IAccountService {
 
-    ResultMessage register(User user);
-
     ResultMessage login(String telNumber, String password);
 
     ResultMessage certification(String telNumber, String identificationId);
@@ -22,4 +20,8 @@ public interface IAccountService {
     ResultMessage getAllUser();
 
     User getNameAndAvatarId(int id);
+
+    ResultMessage getUserByOrderId(Integer roleId, Integer currentUserId);
+
+    ResultMessage getUserByCondition(String condition);
 }

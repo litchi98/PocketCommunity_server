@@ -3,10 +3,8 @@ package com.litchi.pocketcommunity.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.litchi.pocketcommunity.bean.User;
 import com.litchi.pocketcommunity.bean.UserExample;
-import com.litchi.pocketcommunity.bean.Verify;
-import com.litchi.pocketcommunity.bean.VerifyExample;
+import com.litchi.pocketcommunity.bean.UserKey;
 import com.litchi.pocketcommunity.dao.UserMapper;
-import com.litchi.pocketcommunity.dao.VerifyMapper;
 import com.litchi.pocketcommunity.service.IAccountService;
 import com.litchi.pocketcommunity.util.ErrorMessage;
 import com.litchi.pocketcommunity.util.JWTUtils;
@@ -23,34 +21,7 @@ public class AccountService implements IAccountService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private VerifyMapper verifyMapper;
-
-    @Autowired
     private JWTUtils jwtUtils;
-
-    @Override
-    /**
-    * @description: register
-    * TODO
-    * @param: [user]
-    * @return: ResultMessage
-    * @author: litchi
-    */
-    public ResultMessage register(User user) {
-        ResultMessage resultMessage = ResultMessage.getInstance();
-        Integer userId = isExist(user.getTelNumber());
-        if (userId > 0) {
-            return resultMessage.result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.REGISTER_ACCOUNT_ALREADY_EXIST);
-        }
-        //新用户注册
-        user.setAvatarImageId(11);
-        userMapper.insert(user);
-        Integer id = isExist(user.getTelNumber());
-        Verify verify = new Verify(id, Verify.VERIFY_PROCESSING, "");
-        verifyMapper.insert(verify);
-        resultMessage.result(ResultMessage.SUCCESS_RESULT);
-        return resultMessage;
-    }
 
     @Override
     /**
@@ -140,7 +111,9 @@ public class AccountService implements IAccountService {
     * @author: litchi
     */
     public ResultMessage deleteUser(Integer id) {
-        int count = userMapper.deleteByPrimaryKey(id);
+        UserKey userKey = new UserKey();
+        userKey.setId(id);
+        int count = userMapper.deleteByPrimaryKey(userKey);
         if (count == 0) {
             return ResultMessage.getInstance().result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.ACCOUNT_NOT_EXIST_ERROR);
         }
@@ -160,8 +133,9 @@ public class AccountService implements IAccountService {
         if (exist > 0) {
             return ResultMessage.getInstance().result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.REGISTER_ACCOUNT_ALREADY_EXIST);
         }
+        user.setPassword("a123456");
+        user.setAvatarImageId(10);
         userMapper.insert(user);
-        verifyMapper.insert(new Verify(user.getId(), Verify.VERIFY_COMPLETE, ""));
         return ResultMessage.getInstance().result(ResultMessage.SUCCESS_RESULT);
     }
 
@@ -180,7 +154,47 @@ public class AccountService implements IAccountService {
 
     @Override
     public User getNameAndAvatarId(int id) {
-        return userMapper.selectByPrimaryKey(id);
+        UserKey userKey = new UserKey();
+        userKey.setId(id);
+        return userMapper.selectByPrimaryKey(userKey);
+    }
+
+    /**
+    * @description: get all user by user id except current user
+    * TODO 
+    * @param: orderId, currentId
+    * @return: ResultMessage
+    * @author: litchi
+    */
+    @Override
+    public ResultMessage getUserByOrderId(Integer roleId, Integer currentUserId) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andRoleIdEqualTo(roleId).andIdNotEqualTo(currentUserId);
+        List<User> users = userMapper.selectByExample(userExample);
+        return ResultMessage.getInstance().result(ResultMessage.SUCCESS_RESULT).putData("users", users);
+    }
+
+    /**
+    * @description: get all user by condition
+    * TODO
+    * @param: condition
+    * @return: ResultMessage
+    * @author: litchi
+    */
+    @Override
+    public ResultMessage getUserByCondition(String condition) {
+        condition = new StringBuilder("%").append(condition).append("%").toString();
+        UserExample userExample = new UserExample();
+        UserExample.Criteria nameLike = userExample.createCriteria();
+        UserExample.Criteria telLike = userExample.or();
+        UserExample.Criteria idLike = userExample.or();
+        nameLike.andNameLike(condition);
+        telLike.andTelNumberLike(condition);
+        idLike.andIdentificationIdLike(condition);
+        userExample.setDistinct(true);
+        userExample.setOrderByClause("role_id");
+        List<User> users = userMapper.selectByExample(userExample);
+        return checkEmpty(users, "users");
     }
 
 
@@ -198,11 +212,9 @@ public class AccountService implements IAccountService {
         if (userId < 0) {
             return resultMessage.result(ResultMessage.ERROR_RESULT).result(ErrorMessage.ACCOUNT_NOT_EXIST_ERROR);
         }
-        //检查是否有在途审核
-        Verify processing = getVerifyState(userId);
-        if ((resultMessage = isVerifyProcessing(userId)) != null) {
-            return resultMessage;
-        }
+        // 判断账号是否存在在途审核
+        /* 该功能已取消 */
+
         //正常账号则返回该用户的Id和success的结果
         return ResultMessage.getInstance().result(ResultMessage.SUCCESS_RESULT).putData("userId", userId);
     }
@@ -225,43 +237,6 @@ public class AccountService implements IAccountService {
     }
 
     /**
-    * @description: check whether the account is already verify, if true then return null, else return msg
-    * TODO 
-    * @param: userID
-    * @return: ResultMessage
-    * @author: litchi
-    */
-    private ResultMessage isVerifyProcessing(Integer userId) {
-        ResultMessage resultMessage = ResultMessage.getInstance();
-        Verify verify = getVerifyState(userId);
-        if (Verify.VERIFY_PROCESSING.equals(verify.getVerifyResult())) {
-            return resultMessage.result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.ACCOUNT_VERIFY_PROCESSING);
-        } else if (Verify.VERIFY_REFUSAL.equals(verify.getVerifyResult())) {
-            return resultMessage.result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.LOGIN_VERIFY_REFUSAL).putData("reason", verify.getMsg());
-        }
-        return null;
-    }
-
-    /**
-    * @description: get the verify state, if not exist return null
-    * TODO
-    * @param: userId
-    * @return: Verify
-    * @author: litchi
-    */
-    private Verify getVerifyState(Integer userId) {
-        VerifyExample verifyExample = new VerifyExample();
-        verifyExample.createCriteria()
-                .andUserIdEqualTo(userId);
-        List<Verify> verifies = verifyMapper.selectByExample(verifyExample);
-        if (verifies.size() > 0) {
-            return verifies.get(0);
-        } else {
-            return null;
-        }
-    }
-
-    /**
     * @description: get user by id
     * TODO
     * @param: userId
@@ -269,7 +244,24 @@ public class AccountService implements IAccountService {
     * @author: litchi
     */
     private User getUserById(Integer id) {
-        User user = userMapper.selectByPrimaryKey(id);
+        UserKey userKey = new UserKey();
+        userKey.setId(id);
+        User user = userMapper.selectByPrimaryKey(userKey);
         return user;
+    }
+
+    /**
+     * @description: check whether the query result is null
+     * TODO
+     * @param: list, key
+     * @return: ResultMessage
+     * @author: litchi
+     */
+    private ResultMessage checkEmpty(List list, String key){
+        if (list.size() > 0 ){
+            return ResultMessage.getInstance().result(ResultMessage.SUCCESS_RESULT).putData(key, list);
+        } else {
+            return ResultMessage.getInstance().result(ResultMessage.ERROR_RESULT).msg(ErrorMessage.QUERY_RESULT_IS_EMPTY);
+        }
     }
 }

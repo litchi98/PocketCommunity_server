@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * @ClassName: WorkOrderController
  * @Description: TODO
@@ -44,12 +46,14 @@ public class WorkOrderController {
     @ApiOperation(value = "add a work order")
     @PostMapping("/work-order")
     public ResultMessage addWorkOrders(@RequestBody WorkOrder workOrder){
+        workOrder.setProposeDate(new Date());
         return workOrderService.addWorkOrder(workOrder);
     }
 
     @ApiOperation(value = "transfer the work order to a certain processor")
-    @GetMapping("/work-order/transfer")
-    public ResultMessage transferWorkOrder(@RequestBody WorkOrderItem workOrderItem, @RequestParam Integer workOrderId){
+    @PostMapping("/work-order/transfer")
+    public ResultMessage transferWorkOrder(@RequestBody WorkOrderItem workOrderItem){
+        workOrderItem.setDealDate(new Date());
         return workOrderService.transferWorkOrder(workOrderItem);
     }
 

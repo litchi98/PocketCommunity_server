@@ -8,8 +8,6 @@
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="tel_Number" jdbcType="VARCHAR" property="telNumber" />
     <result column="identification_Id" jdbcType="VARCHAR" property="identificationId" />
-    <result column="identification_Image_Id" jdbcType="INTEGER" property="identificationImageId" />
-    <result column="contract_Image_Id" jdbcType="INTEGER" property="contractImageId" />
     <result column="avatar_Image_Id" jdbcType="INTEGER" property="avatarImageId" />
     <result column="role_Id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
@@ -72,8 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, password, gender, tel_Number, identification_Id, identification_Image_Id, 
-    contract_Image_Id, avatar_Image_Id, role_Id
+    id, name, password, gender, tel_Number, identification_Id, avatar_Image_Id, role_Id
   </sql>
   <select id="selectByExample" parameterType="com.litchi.pocketcommunity.bean.UserExample" resultMap="BaseResultMap">
     select
@@ -89,13 +86,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.UserKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from m_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="com.litchi.pocketcommunity.bean.UserKey">
     delete from m_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -108,11 +105,9 @@
   <insert id="insert" parameterType="com.litchi.pocketcommunity.bean.User">
     insert into m_user (id, name, password, 
       gender, tel_Number, identification_Id, 
-      identification_Image_Id, contract_Image_Id, 
       avatar_Image_Id, role_Id)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{gender,jdbcType=VARCHAR}, #{telNumber,jdbcType=VARCHAR}, #{identificationId,jdbcType=VARCHAR}, 
-      #{identificationImageId,jdbcType=INTEGER}, #{contractImageId,jdbcType=INTEGER}, 
       #{avatarImageId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.litchi.pocketcommunity.bean.User">
@@ -135,12 +130,6 @@
       </if>
       <if test="identificationId != null">
         identification_Id,
-      </if>
-      <if test="identificationImageId != null">
-        identification_Image_Id,
-      </if>
-      <if test="contractImageId != null">
-        contract_Image_Id,
       </if>
       <if test="avatarImageId != null">
         avatar_Image_Id,
@@ -167,12 +156,6 @@
       </if>
       <if test="identificationId != null">
         #{identificationId,jdbcType=VARCHAR},
-      </if>
-      <if test="identificationImageId != null">
-        #{identificationImageId,jdbcType=INTEGER},
-      </if>
-      <if test="contractImageId != null">
-        #{contractImageId,jdbcType=INTEGER},
       </if>
       <if test="avatarImageId != null">
         #{avatarImageId,jdbcType=INTEGER},
@@ -209,12 +192,6 @@
       <if test="record.identificationId != null">
         identification_Id = #{record.identificationId,jdbcType=VARCHAR},
       </if>
-      <if test="record.identificationImageId != null">
-        identification_Image_Id = #{record.identificationImageId,jdbcType=INTEGER},
-      </if>
-      <if test="record.contractImageId != null">
-        contract_Image_Id = #{record.contractImageId,jdbcType=INTEGER},
-      </if>
       <if test="record.avatarImageId != null">
         avatar_Image_Id = #{record.avatarImageId,jdbcType=INTEGER},
       </if>
@@ -234,8 +211,6 @@
       gender = #{record.gender,jdbcType=VARCHAR},
       tel_Number = #{record.telNumber,jdbcType=VARCHAR},
       identification_Id = #{record.identificationId,jdbcType=VARCHAR},
-      identification_Image_Id = #{record.identificationImageId,jdbcType=INTEGER},
-      contract_Image_Id = #{record.contractImageId,jdbcType=INTEGER},
       avatar_Image_Id = #{record.avatarImageId,jdbcType=INTEGER},
       role_Id = #{record.roleId,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -260,12 +235,6 @@
       <if test="identificationId != null">
         identification_Id = #{identificationId,jdbcType=VARCHAR},
       </if>
-      <if test="identificationImageId != null">
-        identification_Image_Id = #{identificationImageId,jdbcType=INTEGER},
-      </if>
-      <if test="contractImageId != null">
-        contract_Image_Id = #{contractImageId,jdbcType=INTEGER},
-      </if>
       <if test="avatarImageId != null">
         avatar_Image_Id = #{avatarImageId,jdbcType=INTEGER},
       </if>
@@ -282,8 +251,6 @@
       gender = #{gender,jdbcType=VARCHAR},
       tel_Number = #{telNumber,jdbcType=VARCHAR},
       identification_Id = #{identificationId,jdbcType=VARCHAR},
-      identification_Image_Id = #{identificationImageId,jdbcType=INTEGER},
-      contract_Image_Id = #{contractImageId,jdbcType=INTEGER},
       avatar_Image_Id = #{avatarImageId,jdbcType=INTEGER},
       role_Id = #{roleId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

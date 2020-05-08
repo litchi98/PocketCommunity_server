@@ -152,7 +152,7 @@ public class WorkOrderService implements IWorkOrderService {
         workOrderExample.createCriteria().andIdEqualTo(workOrderId);
         WorkOrder workOrder = new WorkOrder();
         workOrder.setState(state);
-        workOrder.setProposerId(nextProcessorId);
+        workOrder.setCurrentProcessorId(nextProcessorId);
         workOrderMapper.updateByExampleSelective(workOrder, workOrderExample);
     }
 
@@ -181,7 +181,6 @@ public class WorkOrderService implements IWorkOrderService {
         workOrderExample.or(criteria2);
         workOrderExample.or(criteria3);
         workOrderExample.or(criteria4);
-        List<WorkOrderExample.Criteria> oredCriteria = workOrderExample.getOredCriteria();
         workOrderExample.setDistinct(true);
         workOrderExample.setOrderByClause("state, id");
         return workOrderMapper.selectByExample(workOrderExample);

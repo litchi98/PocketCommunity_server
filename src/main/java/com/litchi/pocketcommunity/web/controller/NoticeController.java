@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * @ClassName: NoticeController
  * @Description: TODO
@@ -21,15 +23,14 @@ public class NoticeController {
     @ApiOperation(value = "get recent notices")
     @GetMapping("/notices")
     public ResultMessage getNotices(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize){
-        ResultMessage resultMessage = noticeService.getNotices(pageNum, pageSize);
-        return resultMessage;
+        return noticeService.getNotices(pageNum, pageSize);
     }
 
     @ApiOperation(value = "push a notice")
     @PostMapping("/notice")
     public ResultMessage addNotice(@RequestBody Notice notice){
-        ResultMessage resultMessage = noticeService.addNotice(notice);
-        return resultMessage;
+        notice.setPublishDate(new Date());
+        return noticeService.addNotice(notice);
     }
 
 }
