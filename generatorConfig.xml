@@ -25,9 +25,9 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="m_user" domainObjectName="User">
-            <property name="useActualColumnNames" value="false" />
-        </table>
+<!--        <table tableName="m_user" domainObjectName="User">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
 <!--        <table tableName="car" domainObjectName="Car">-->
 <!--            <property name="useActualColumnNames" value="false" />-->
 <!--        </table>-->
@@ -46,7 +46,10 @@
 <!--        <table tableName="work_order_detail" domainObjectName="WorkOrderItem">-->
 <!--            <property name="useActualColumnNames" value="false" />-->
 <!--        </table>-->
-<!--        <table tableName="asd"/>-->
+<!--        <table tableName="building" domainObjectName="Building">-->
+<!--            <property name="useActualColumnNames" value="false" />-->
+<!--        </table>-->
+        <table tableName="asd"/>
     </context>
 
 </generatorConfiguration>
